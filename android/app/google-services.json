@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "117599831740",
+    "project_id": "delivery-updates-ee90f",
+    "storage_bucket": "delivery-updates-ee90f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:117599831740:android:13c0fad8807c0693fdb2b9",
+        "android_client_info": {
+          "package_name": "com.example.delivery_updates"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNhdUvr3z6kPIbUj2702jicit8WDkowlI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

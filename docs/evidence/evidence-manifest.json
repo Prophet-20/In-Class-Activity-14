@@ -1,0 +1,109 @@
+{
+  "date": "2026-11-09",
+  "timezone": "America/New_York",
+  "created": "2026-11-09T19:19:11.616984-05:00",
+  "device": {
+    "ro.product.model": "sdk_gphone16k_arm64",
+    "ro.build.version.release": "17",
+    "ro.build.version.sdk": "37",
+    "ro.kernel.qemu.avd_name": "",
+    "notification_permission": [
+      "android.permission.POST_NOTIFICATIONS: granted=true, flags=[ USER_SET|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]"
+    ],
+    "app_package": "com.example.delivery_updates",
+    "source_sha256": {
+      "lib/firebase_options.dart": "8f60292d75001d20dd4953ef42f9ab717b817a57a1d5bf9061c361c635141173",
+      "lib/main.dart": "7e21d5f629a96870fab24ac37e7a0525192674d887a05cc01553e8b9a49659b9",
+      "lib/fcm_service.dart": "6817460b55eae02b03161724190d0348897218e601a943cf8cd94d5515a78270"
+    }
+  },
+  "tests": [
+    {
+      "id": "T1",
+      "name": "Foreground receipt",
+      "handler": "onMessage",
+      "count": 2,
+      "time": "7:11:57 PM EST",
+      "message_id": "0:1794269516848575%89395b5089395b50",
+      "steps": "Kept the app visible and sent the valid payload to its current device token.",
+      "expected": "onMessage; delivery title and image update; fresh receipt metadata.",
+      "observed": "onMessage; receipt count 1 to 2; Out for delivery and van image; valid update diagnostic.",
+      "before": "00-before-tests.png",
+      "after": "T1-foreground.png",
+      "left_label": "Before: existing app state",
+      "right_label": "After: valid foreground receipt",
+      "note": "The app already had one earlier receipt before this test. T1 is the fresh event at count 2.",
+      "result": "PASS",
+      "evidence": "T1-evidence.png; delivery-evidence.pdf page 2"
+    },
+    {
+      "id": "T2",
+      "name": "Background notification tap",
+      "handler": "onMessageOpenedApp",
+      "count": 3,
+      "time": "7:13:12 PM EST",
+      "message_id": "0:1794269561360653%89395b5089395b50",
+      "steps": "Pressed Home, sent the same valid payload, opened the notification shade, and tapped the notification.",
+      "expected": "Delivered notification; onMessageOpenedApp after tap; delivery UI retained.",
+      "observed": "Notification delivered; tap ran onMessageOpenedApp; receipt count 3; delivery UI present; PID stayed 4248.",
+      "before": "T2-notification.png",
+      "after": "T2-background-open.png",
+      "left_label": "Delivered while app was backgrounded",
+      "right_label": "After tapping the notification",
+      "note": "The same app process (PID 4248) resumed. The new handler, count, and message ID establish a fresh event.",
+      "result": "PASS",
+      "evidence": "T2-evidence.png; delivery-evidence.pdf page 3"
+    },
+    {
+      "id": "T3",
+      "name": "Notification-triggered cold start",
+      "handler": "getInitialMessage",
+      "count": 1,
+      "time": "7:14:43 PM EST",
+      "message_id": "0:1794269653398385%89395b5089395b50",
+      "steps": "Dismissed the app from recents, verified its process ended and stopped=false, sent the same valid payload, then tapped its notification.",
+      "expected": "Notification-triggered launch; getInitialMessage; receipt count 1; delivery UI.",
+      "observed": "New process PID 5780; getInitialMessage; receipt count 1; Out for delivery and van image.",
+      "before": "T3-notification.png",
+      "after": "T3-cold-start.png",
+      "left_label": "Notification delivered before app launch",
+      "right_label": "Cold start from the notification tap",
+      "note": "Normal recents dismissal ended the app process. No Settings force-stop, launcher-icon start, or flutter run was used.",
+      "result": "PASS",
+      "evidence": "T3-evidence.png; delivery-evidence.pdf page 4"
+    },
+    {
+      "id": "T4",
+      "name": "Unsupported asset rejected",
+      "handler": "onMessage",
+      "count": 2,
+      "time": "7:15:34 PM EST",
+      "message_id": "0:1794269733864634%89395b5089395b50",
+      "steps": "Kept the app foregrounded and changed only data.asset from promo to unknown.",
+      "expected": "onMessage; visible rejection; increased receipt metadata; previous title/image retained; no crash.",
+      "observed": "onMessage; count 1 to 2; Rejected: unsupported asset \"unknown\".; previous delivery title/image preserved; app stayed running.",
+      "before": "T4-before.png",
+      "after": "T4-invalid-after.png",
+      "left_label": "Before: accepted delivery content",
+      "right_label": "After: invalid asset safely rejected",
+      "note": "The title/image area is pixel-identical before and after (original screenshot region x=0..1344, y=160..1350).",
+      "result": "PASS",
+      "evidence": "T4-evidence.png; delivery-evidence.pdf page 5"
+    }
+  ],
+  "source_files_unchanged": true,
+  "app_configuration_changed_during_tests": false,
+  "screenshots_sha256": {
+    "T4-invalid-after.png": "931cc4118c919dd7fdfb6640e85938a194c26f28ce00cf0bdb131857a1fcd6f6",
+    "00-before-tests.png": "62b551926e3d6646fcf0f9da39db97decacb1e80bbf8db37cfc751b851d212d6",
+    "T3-dismissed.png": "856e884a4977ee8fe178dc50e38cb3867e83556ebd015b673e0e6515177a74f4",
+    "T4-before.png": "778ff811c825fdb19cefb4d43b7a836bb161cecd3b59a6f34222de7d56d49aa8",
+    "T1-foreground.png": "0dcc3d37fa3278eddcc809d2304c06c2b8912a00fcb8b8226d9dd2c5eb296e6d",
+    "T3-notification.png": "1c32d21d95b1e9bb4c9d2ffb9f8c4afd02525038b662ee5c69f0ed3ac4df8c5a",
+    "T2-background-open.png": "a772b6d2b5fe88d5680bc32591140730e1e57a4fb30c42d54b937e9d03e52898",
+    "T2-background-before-send.png": "0dcc3d37fa3278eddcc809d2304c06c2b8912a00fcb8b8226d9dd2c5eb296e6d",
+    "T3-cold-start.png": "836fd2cbe8c09be012719f255ed61f4777c86b71823a1c012f0a50914b4e6d16",
+    "T3-recents.png": "a006fb5ad397df08adcffb56a0caec0660de8a7c9a43a45d2811efd8bf8e5446",
+    "T2-notification.png": "1a8089d989e1e3249da299002c79db247f9784d64319e67779e7da95ed8ddb6b"
+  }
+}

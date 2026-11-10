@@ -1,0 +1,10 @@
+{
+  "notification": {
+    "title": "Order #1001 is out for delivery",
+    "body": "Your driver is on the way."
+  },
+  "data": {
+    "action": "update_ui",
+    "asset": "promo"
+  }
+}
