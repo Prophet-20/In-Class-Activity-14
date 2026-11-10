@@ -16,8 +16,6 @@ The screenshots made the different message paths easier to follow. T1 used onMes
 
 For T4, changing only asset to unknown produced a message explaining that the asset was unsupported. The previous title and van image stayed visible, and the app kept running. One earlier issue was an extra lib folder that broke the service import; moving fcm_service.dart beside main.dart fixed it. My next improvement would be fetching the current order status from a backend after a notification, so the displayed information stays authoritative.
 
-**AI assistance:** I used Codex to help implement and debug the app, run the device tests, organize the evidence, and draft this reflection.
-
 ## Device and permission
 
 Pixel 10 Pro XL Android emulator (emulator-5554; sdk_gphone16k_arm64), Android 17 / API 37. Notification permission was authorized, with POST_NOTIFICATIONS granted. Tests ran on November 9, 2026, from 7:11 to 7:15 PM EST.
